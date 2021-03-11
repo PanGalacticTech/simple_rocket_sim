@@ -54,7 +54,7 @@ Thrust
 
 Variables:
     
-    Mfr = mass flow rate of expended propellant 
+    Mfr = mass flow rate of expended propellant kg/s
     
 Equation:    
     Fthrust = g * Isp * Mfr
@@ -66,14 +66,29 @@ Input Variables:
 '''
 
 
-def thrust_calc(Isp, Mfr):
-    Fthrust = g*Isp*Mfr
-    print("[",Fthrust, "] N = [",g," m/s^(-2) x [",Isp,"] s x [",Mfr,"] kg/s ")
+
+def thrust_isp_flow(Isp, Mfr):
+    Fthrust = round(g*Isp*Mfr, 5)
+    print("Thrust = ")
+    print("[",Fthrust, "] N = [",g,"] m/s^(-2) x [",Isp,"] s x [",Mfr,"] kg/s ")
     return Fthrust
 
+mass_flow_rate = 10   # kg/s
+isp = 300  # s
 
-thrust_calc(300, )
+thrust_isp_flow(isp, mass_flow_rate)
 
+
+
+def burn_duration_from_mfr(Mfr, fuel_mass):
+    burn_duration = fuel_mass / Mfr
+    print("burn_duration = fuel_mass / Mfr")
+    print("[", burn_duration, "] s = [", fuel_mass, "] kg / [", Mfr, "] kg/s ")
+    return burn_duration
+
+fuel_total_mass = 100    # kgs
+
+burn_duration_from_mfr(mass_flow_rate, fuel_total_mass)
 
 '''
 
@@ -98,9 +113,28 @@ Input Variables:
 
 '''
 Micro Case Solid Rocket Motor
-
+http://www.pro38.com/products/pro75/motor.php
     code	  Total Impulse (Ns)     Burn Duration (s)     Peak Thrust (ib)  prop type
 8429M2020-P         8429                   4.2                603              Imax™
 
 
+Vehicle Dry Mass: 
+Vehicle Wet Mass:
+Propellant Mass:
 '''
+
+
+def thrust_impulse_duration(impulse_total, burn_duration):
+    thrust =  round(impulse_total / burn_duration, 5)
+    print("Thrust = impulse_total / burn_duration")
+    print("[",thrust, "] N = [", impulse_total , "] Ns / [", burn_duration, "] s")
+
+impulse_total = 8429   # Ns
+burn_duration = 4.2    # s
+
+
+
+print("Micro Case Solid Rocket Motor")
+
+thrust_impulse_duration(impulse_total,burn_duration)
+
